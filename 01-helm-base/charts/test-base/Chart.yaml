@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Base
+name: test-base
+version: 0.1.0
