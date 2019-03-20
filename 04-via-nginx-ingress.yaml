@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: nginx
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-production
+    certmanager.k8s.io/acme-challenge-type: http01
+    certmanager.k8s.io/acme-http01-ingress-class: nginx
+spec:
+  tls:
+    - hosts:
+      - test.staging.truebrain.nl
+      secretName: nginx-ingress-cert
+  rules:
+    - host: test.staging.truebrain.nl
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: nginx-service
+            servicePort: http
