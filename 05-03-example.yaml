@@ -1,0 +1,15 @@
+---
+apiVersion: k8s.truebrain.nl/v1
+kind: Instance
+metadata:
+  name: customer-a
+spec:
+  appversion: 1.13
+
+---
+apiVersion: k8s.truebrain.nl/v1
+kind: Instance
+metadata:
+  name: customer-b
+spec:
+  appversion: 1.12
